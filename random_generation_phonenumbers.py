@@ -1,0 +1,46 @@
+#随机生成电话号码
+'''
+中国电信号段:133,153,180,181,189,173,177,149
+中国联通号段:130,131,132,155,156,185,186,145,176,185
+中国移动号段:134,135,136,137,138,139,150,151,152,158,159,182,183,184,147,178
+
+11位
+第一位:1
+第二位:3,4,5,7,8
+第三位:根据第二位来确定
+    3 + [0-9]
+    4 + [5,7,9]
+    5 + [0-9] ! 4
+    7 + [0-9] ! 4 and 9
+    8 + [0-9]
+后八位:随机生成8个数字
+'''
+import random
+
+#生成电话号码
+def creat_phone():
+    #第二位
+    #随机生成整数   random.randint(0,4)  包含0-4
+    second=[3,4,5,7,8][random.randint(0,4)]
+
+    #第三位
+    third={
+        3:random.randint(0,9),  #随机生成0-9
+        4:[5,7,9][random.randint(0,2)],
+        5:[i for i in range(10) if i!=4][random.randint(0,8)],  #9个数 0  8
+        7:[i for i in range(10) if i not in [4,9]][random.randint(0,7)],
+        8:random.randint(0,9) #随机生成0-9
+    }[second]
+    #后八位
+    suffix = ''
+    for x in range(8):
+        suffix = suffix + str(random.randint(0,9))
+    return '1{}{}{}'.format(second,third,suffix)
+#调用
+#print(creat_phone())
+def main():
+    a=int(input('请输入想生成的电话个数:'))
+    for index in range(a):
+        print(creat_phone())
+#调用主函数
+main()
