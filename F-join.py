@@ -1,0 +1,9 @@
+#字符串之间增加字符或者字符串
+a=['d','o','g']
+b=','
+print(a)
+print(b.join(a))
+c='-'
+print(c.join(a))
+D=c.join(a)
+print(D)
